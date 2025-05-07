@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <% if (cart.length) { %>
+    <ul>
+      <% cart.forEach(item => { %>
+        <li>Product ID: <%= item.productId %>, Quantity: <%= item.quantity %>, Price: $<%= item.price %></li>
+      <% }) %>
+    </ul>
+    <form action="/payment/checkout" method="POST">
+      <label>Phone Number for MTN MoMo:</label>
+      <input type="text" name="phoneNumber" required>
+      <button type="submit">Proceed to Payment</button>
+    </form>
+  <% } else { %>
+    <p>Cart is empty</p>
+  <% } %>
+  <a href="/">Continue Shopping</a>
+</body>
+</html>
