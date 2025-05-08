@@ -1,10 +1,25 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  div {
-    margin: 10px 0;
-  }
-  button {
-    padding: 5px 10px;
-  }
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+div {
+  margin: 10px 0;
+}
+button {
+  padding: 5px 10px;
+}
+.navbar-dark .navbar-brand {
+  font-size: 1.8rem;
+  color: #f8c146 !important; /* Example: golden yellow */
+}
+.card {
+  border: 1px solid #ddd;
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+.navbar form input {
+  max-width: 150px;
+}

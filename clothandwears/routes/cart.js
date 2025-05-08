@@ -2,16 +2,38 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 
-// Add to cart (simplified, stored in session)
+// Add to cart
 router.post('/add', async (req, res) => {
-  const { productId, quantity } = req.body;
-  if (!req.session.cart) req.session.cart = [];
-  
-  const product = await Product.findById(productId);
-  if (!product) return res.status(404).send('Product not found');
-
-  req.session.cart.push({ productId, quantity: parseInt(quantity), price: product.price });
-  res.redirect('/cart');
+  try {
+    const { productId, quantity } = req.body;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    if (product.stock < quantity) {
+      return res.status(400).json({ message: 'Insufficient stock' });
+    }
+    
+    const cart = req.session.cart || [];
+    const existingItem = cart.find(item => item.productId === productId);
+    
+    if (existingItem) {
+      existingItem.quantity += parseInt(quantity);
+    } else {
+      cart.push({
+        productId,
+        quantity: parseInt(quantity),
+        price: product.price,
+        name: product.name
+      });
+    }
+    
+    req.session.cart = cart;
+    res.json({ message: 'Item added to cart', cart });
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+    res.status(500).json({ message: 'Server Error' });
+  }
 });
 
 // View cart
