@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
   res.status(500).render('error', { title: 'Server Error', error: err.message });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 if (process.env.NODE_ENV !== 'production') {
   app.listen(port, () => console.log(`Server running on port ${port}`));
 }
